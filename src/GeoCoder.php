@@ -116,7 +116,7 @@ class GeoCoder
             $placeId = $lng;
             $coordinates = $lat;
         } else {
-            $coordinates = "{$lat},$lng";
+            $coordinates = "{$lat},{$lng}";
         }
 
         $response = $this->request(
