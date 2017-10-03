@@ -1,0 +1,30 @@
+{
+    "name": "mcmatters/google-geocoding-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Borzyonok",
+            "email": "dima.matters@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "codeclimate/php-test-reporter": "^0.4.4",
+        "phpunit/phpunit": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "McMatters\\GoogleGeocoding\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "McMatters\\GoogleGeocoding\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
