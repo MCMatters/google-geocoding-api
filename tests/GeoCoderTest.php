@@ -8,19 +8,19 @@ use McMatters\GoogleGeocoding\GeoCoder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class GeocoderTest
+ * Class GeoCoderTest
  *
  * @package McMatters\GoogleGeocoding\Tests
  */
-class GeocoderTest extends TestCase
+class GeoCoderTest extends TestCase
 {
     /**
      * @var GeoCoder
      */
-    protected $geocoder;
+    protected $geoCoder;
 
     /**
-     * GeocoderTest constructor.
+     * GeoCoderTest constructor.
      *
      * @param null $name
      * @param array $data
@@ -30,7 +30,7 @@ class GeocoderTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->geocoder = new GeoCoder(getenv('GOOGLE_GEOCODING_API_KEY'));
+        $this->geoCoder = new GeoCoder(getenv('GOOGLE_GEOCODING_API_KEY'));
     }
 
     /**
@@ -38,7 +38,7 @@ class GeocoderTest extends TestCase
      */
     public function testGetByAddress()
     {
-        $addresses = $this->geocoder->getByAddress('Kyiv');
+        $addresses = $this->geoCoder->getByAddress('Kyiv');
         $this->assertTrue($addresses->isNotEmpty());
         $this->assertCount(1, $addresses);
         $this->assertNotEmpty($addresses->first());

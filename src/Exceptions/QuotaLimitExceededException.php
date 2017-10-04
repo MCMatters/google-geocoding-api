@@ -11,7 +11,7 @@ use Exception;
  *
  * @package McMatters\GoogleGeocoding\Exceptions
  */
-class QuotaLimitExceededException extends Exception
+class QuotaLimitExceededException extends Exception implements GeoCodingException
 {
     /**
      * QuotaLimitExceededException constructor.

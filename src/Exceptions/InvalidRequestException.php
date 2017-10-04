@@ -11,7 +11,7 @@ use Exception;
  *
  * @package McMatters\GoogleGeocoding\Exceptions
  */
-class InvalidRequestException extends Exception
+class InvalidRequestException extends Exception implements GeoCodingException
 {
     /**
      * InvalidRequestException constructor.

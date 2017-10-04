@@ -11,7 +11,7 @@ use Exception;
  *
  * @package McMatters\GoogleGeocoding\Exceptions
  */
-class UnknownErrorException extends Exception
+class UnknownErrorException extends Exception implements GeoCodingException
 {
     /**
      * UnknownErrorException constructor.
