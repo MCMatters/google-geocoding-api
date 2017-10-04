@@ -15,7 +15,7 @@ use McMatters\GoogleGeocoding\Exceptions\{
 use RuntimeException;
 use const true;
 use function array_filter, array_key_exists, array_merge, gettype,
-    http_build_query, implode, mb_strlen, strpos;
+    http_build_query, implode, is_string, mb_strlen, strpos;
 
 /**
  * Class GeoCoder
@@ -93,8 +93,8 @@ class GeoCoder
     }
 
     /**
-     * @param string $lat
-     * @param string|null $lng
+     * @param float|string $lat
+     * @param float|string|null $lng
      * @param string|null $placeId
      *
      * @return AddressCollection
@@ -108,12 +108,12 @@ class GeoCoder
      * @throws ClientException
      */
     public function getByLatLng(
-        string $lat,
-        string $lng = null,
+        $lat,
+        $lng = null,
         string $placeId = null
     ): AddressCollection {
-        if (strpos($lat, ',')) {
-            $placeId = $lng;
+        if (is_string($lat) && strpos($lat, ',')) {
+            $placeId = (string) $lng;
             $coordinates = $lat;
         } else {
             $coordinates = "{$lat},{$lng}";
