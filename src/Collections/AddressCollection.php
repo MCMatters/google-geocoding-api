@@ -60,28 +60,9 @@ class AddressCollection extends ItemCollection
     }
 
     /**
-     * @param bool $flag
-     *
-     * @return AddressCollection
-     */
-    protected function getMatched(bool $flag = false): self
-    {
-        $items = [];
-
-        /** @var Address $item */
-        foreach ($this->items as $item) {
-            if ($item->isPartialMatch() === $flag) {
-                $items[] = $item;
-            }
-        }
-
-        return new static($items);
-    }
-
-    /**
      * @return Address|null
      */
-    protected function getExactMatch()
+    public function getExactMatch()
     {
         $addresses = [];
 
@@ -104,5 +85,24 @@ class AddressCollection extends ItemCollection
         }
 
         return null;
+    }
+
+    /**
+     * @param bool $flag
+     *
+     * @return AddressCollection
+     */
+    protected function getMatched(bool $flag = false): self
+    {
+        $items = [];
+
+        /** @var Address $item */
+        foreach ($this->items as $item) {
+            if ($item->isPartialMatch() === $flag) {
+                $items[] = $item;
+            }
+        }
+
+        return new static($items);
     }
 }
