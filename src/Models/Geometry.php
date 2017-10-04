@@ -11,6 +11,11 @@ namespace McMatters\GoogleGeocoding\Models;
  */
 class Geometry extends ItemModel
 {
+    const TYPE_APPROXIMATE = 'APPROXIMATE';
+    const TYPE_GEOMETRIC_CENTER = 'GEOMETRIC_CENTER';
+    const TYPE_RANGE_INTERPOLATED = 'RANGE_INTERPOLATED';
+    const TYPE_ROOFTOP = 'ROOFTOP';
+
     /**
      * @var string
      */
@@ -115,6 +120,30 @@ class Geometry extends ItemModel
     public function getViewport(): array
     {
         return $this->viewport;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getRelevancyTypes(): array
+    {
+        return [
+            self::TYPE_ROOFTOP,
+            self::TYPE_RANGE_INTERPOLATED,
+            self::TYPE_GEOMETRIC_CENTER,
+            self::TYPE_APPROXIMATE,
+        ];
+    }
+
+    /**
+     * It doesn't matter in which order it will be returned.
+     * It is just an array of types.
+     *
+     * @return array
+     */
+    public static function getTypes(): array
+    {
+        return self::getRelevancyTypes();
     }
 
     /**

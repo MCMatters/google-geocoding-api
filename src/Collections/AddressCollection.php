@@ -5,8 +5,9 @@ declare(strict_types = 1);
 namespace McMatters\GoogleGeocoding\Collections;
 
 use McMatters\GoogleGeocoding\Models\Address;
+use McMatters\GoogleGeocoding\Models\Geometry;
 use const false, true;
-use function array_merge;
+use function array_merge, reset;
 
 /**
  * Class AddressCollection
@@ -41,7 +42,7 @@ class AddressCollection extends ItemCollection
      */
     public function getPartialMatched(): self
     {
-        return $this->getMatched(false);
+        return $this->getMatched(true);
     }
 
     /**
@@ -63,7 +64,7 @@ class AddressCollection extends ItemCollection
      *
      * @return AddressCollection
      */
-    protected function getMatched(bool $flag = true): self
+    protected function getMatched(bool $flag = false): self
     {
         $items = [];
 
@@ -75,5 +76,33 @@ class AddressCollection extends ItemCollection
         }
 
         return new static($items);
+    }
+
+    /**
+     * @return Address|null
+     */
+    protected function getExactMatch()
+    {
+        $addresses = [];
+
+        if ($this->count() === 1) {
+            return $this->first();
+        }
+
+        foreach ($this->items as $item) {
+            if ($item->isPartialMatch() === false) {
+                return $item;
+            }
+
+            $addresses[$item->getGeometry()->getType()][] = $item;
+        }
+
+        foreach (Geometry::getRelevancyTypes() as $type) {
+            if (!empty($addresses[$type])) {
+                return reset($addresses[$type]);
+            }
+        }
+
+        return null;
     }
 }
