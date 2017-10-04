@@ -73,6 +73,14 @@ class Address extends ItemModel
     }
 
     /**
+     * @return array
+     */
+    public function getCoordinates(): array
+    {
+        return $this->geometry->getLocation();
+    }
+
+    /**
      * @return float
      */
     public function getLatitude(): float
