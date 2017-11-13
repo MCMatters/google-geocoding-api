@@ -121,6 +121,16 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
+     * @param mixed $key
+     *
+     * @return ItemModel|null
+     */
+    public function get($key)
+    {
+        return $this->offsetGet($key);
+    }
+
+    /**
      * @return array
      */
     public function raw(): array

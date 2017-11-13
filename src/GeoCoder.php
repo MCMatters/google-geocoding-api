@@ -102,7 +102,7 @@ class GeoCoder
         string $placeId = null
     ): AddressCollection {
         if (is_string($lat) && strpos($lat, ',')) {
-            $placeId = (string) $lng;
+            $placeId = null !== $lng ? (string) $lng : null;
             $coordinates = $lat;
         } else {
             $coordinates = "{$lat},{$lng}";
