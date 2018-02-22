@@ -206,7 +206,7 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * @param $items
+     * @param mixed $items
      *
      * @return void
      */
@@ -228,7 +228,7 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * @param $items
+     * @param mixed $items
      *
      * @return array
      */

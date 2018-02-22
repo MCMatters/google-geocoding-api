@@ -28,6 +28,8 @@ class GeoCoderTest extends TestCase
      * @param null $name
      * @param array $data
      * @param string $dataName
+     *
+     * @throws \InvalidArgumentException
      */
     public function __construct($name = null, array $data = [], $dataName = '')
     {
@@ -38,6 +40,12 @@ class GeoCoderTest extends TestCase
 
     /**
      * Test method "getByAddress".
+     *
+     * @throws \InvalidArgumentException
+     * @throws \McMatters\GoogleGeocoding\Exceptions\GeoCodingException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \Throwable
      */
     public function testGetByAddress()
     {
@@ -49,6 +57,11 @@ class GeoCoderTest extends TestCase
 
     /**
      * Test method "getByLatLng".
+     *
+     * @throws \InvalidArgumentException
+     * @throws \McMatters\GoogleGeocoding\Exceptions\GeoCodingException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Throwable
      */
     public function testGetByLatLng()
     {

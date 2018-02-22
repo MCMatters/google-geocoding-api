@@ -5,14 +5,14 @@ declare(strict_types = 1);
 namespace McMatters\GoogleGeocoding\Components;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use InvalidArgumentException;
 use McMatters\GoogleGeocoding\Collections\AddressCollection;
+use McMatters\GoogleGeocoding\Exceptions\GeoCodingException;
 use McMatters\GoogleGeocoding\Exceptions\InvalidRequestException;
 use McMatters\GoogleGeocoding\Exceptions\QuotaLimitExceededException;
 use McMatters\GoogleGeocoding\Exceptions\RequestDeniedException;
 use McMatters\GoogleGeocoding\Exceptions\UnknownErrorException;
-use RuntimeException;
+use Throwable;
 use const false, null, true;
 use function array_key_exists, gettype, json_decode, strpos;
 
@@ -36,7 +36,7 @@ class HttpClient
     /**
      * HttpClient constructor.
      *
-     * @param mixed $key
+     * @param string|array $key
      *
      * @throws InvalidArgumentException
      */
@@ -50,12 +50,8 @@ class HttpClient
      * @param string $url
      *
      * @return AddressCollection|null
-     * @throws UnknownErrorException
-     * @throws RequestDeniedException
-     * @throws QuotaLimitExceededException
-     * @throws InvalidRequestException
-     * @throws RuntimeException
-     * @throws ClientException
+     * @throws GeoCodingException
+     * @throws Throwable
      */
     public function get(string $url)
     {
@@ -63,7 +59,7 @@ class HttpClient
 
         try {
             $response = $this->httpClient->get($url)->getBody()->getContents();
-        } catch (ClientException $e) {
+        } catch (Throwable $e) {
             $response = $e->getResponse();
 
             if (null === $response) {
@@ -80,10 +76,7 @@ class HttpClient
      * @param string|null $response
      *
      * @return AddressCollection|null
-     * @throws UnknownErrorException
-     * @throws RequestDeniedException
-     * @throws QuotaLimitExceededException
-     * @throws InvalidRequestException
+     * @throws GeoCodingException
      */
     protected function parseResponse(string $response = null)
     {
@@ -133,10 +126,8 @@ class HttpClient
      * @param string $status
      * @param string $error
      *
-     * @throws InvalidRequestException
-     * @throws QuotaLimitExceededException
-     * @throws RequestDeniedException
-     * @throws UnknownErrorException
+     * @return void
+     * @throws GeoCodingException
      */
     protected function checkResponseStatus(string $status, string $error = '')
     {
@@ -165,7 +156,7 @@ class HttpClient
     {
         switch (gettype($key)) {
             case 'array':
-                if (empty($key['client']) || empty($key['signature'])) {
+                if (empty($key['client']) && empty($key['signature'])) {
                     throw new InvalidArgumentException(
                         '$apiKey must contain "client" and "signature" values.'
                     );

@@ -4,16 +4,12 @@ declare(strict_types = 1);
 
 namespace McMatters\GoogleGeocoding;
 
-use GuzzleHttp\Exception\ClientException;
 use InvalidArgumentException;
 use McMatters\GoogleGeocoding\Collections\AddressCollection;
 use McMatters\GoogleGeocoding\Components\HttpClient;
 use McMatters\GoogleGeocoding\Components\UrlBuilder;
-use McMatters\GoogleGeocoding\Exceptions\{
-    InvalidRequestException, QuotaLimitExceededException,
-    RequestDeniedException, UnknownErrorException, UrlLengthExceededException
-};
-use RuntimeException;
+use McMatters\GoogleGeocoding\Exceptions\GeoCodingException;
+use Throwable;
 use const null, true;
 use function array_merge, is_string, strpos;
 
@@ -37,7 +33,7 @@ class GeoCoder
     /**
      * GeoCoder constructor.
      *
-     * @param mixed $key
+     * @param string|array $key
      * @param bool $secure
      *
      * @throws InvalidArgumentException
@@ -50,18 +46,13 @@ class GeoCoder
 
     /**
      * @param string|null $address
-     * @param array $components
+     * @param array|string $components
      * @param array $params
      *
      * @return AddressCollection
-     * @throws UrlLengthExceededException
      * @throws InvalidArgumentException
-     * @throws RuntimeException
-     * @throws UnknownErrorException
-     * @throws RequestDeniedException
-     * @throws QuotaLimitExceededException
-     * @throws InvalidRequestException
-     * @throws ClientException
+     * @throws GeoCodingException
+     * @throws Throwable
      */
     public function getByAddress(
         string $address = null,
@@ -87,14 +78,9 @@ class GeoCoder
      * @param string|null $placeId
      *
      * @return AddressCollection
-     * @throws UrlLengthExceededException
      * @throws InvalidArgumentException
-     * @throws RuntimeException
-     * @throws UnknownErrorException
-     * @throws RequestDeniedException
-     * @throws QuotaLimitExceededException
-     * @throws InvalidRequestException
-     * @throws ClientException
+     * @throws GeoCodingException
+     * @throws Throwable
      */
     public function getByLatLng(
         $lat,

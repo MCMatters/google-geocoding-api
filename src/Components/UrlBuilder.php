@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace McMatters\GoogleGeocoding\Components;
 
 use InvalidArgumentException;
+use McMatters\GoogleGeocoding\Exceptions\GeoCodingException;
 use McMatters\GoogleGeocoding\Exceptions\UrlLengthExceededException;
 use const false, true;
 use function array_filter, gettype, http_build_query, implode, mb_strlen, strpos;
@@ -52,8 +53,8 @@ class UrlBuilder
 
     /**
      * @return string
-     * @throws UrlLengthExceededException
      * @throws InvalidArgumentException
+     * @throws GeoCodingException
      */
     public function buildUrl(): string
     {
@@ -109,7 +110,6 @@ class UrlBuilder
 
     /**
      * @return string
-     * @throws InvalidArgumentException
      */
     protected function buildArrayComponents(): string
     {
@@ -137,7 +137,8 @@ class UrlBuilder
     /**
      * @param string $url
      *
-     * @throws UrlLengthExceededException
+     * @return void
+     * @throws GeoCodingException
      */
     protected function checkUrlLength(string $url)
     {

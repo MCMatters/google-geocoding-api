@@ -11,7 +11,7 @@ use Exception;
  *
  * @package McMatters\GoogleGeocoding\Exceptions
  */
-class UrlLengthExceededException extends Exception
+class UrlLengthExceededException extends Exception implements GeoCodingException
 {
     /**
      * UrlLengthExceededException constructor.
