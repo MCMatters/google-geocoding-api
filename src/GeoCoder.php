@@ -76,6 +76,7 @@ class GeoCoder
      * @param float|string $lat
      * @param float|string|null $lng
      * @param string|null $placeId
+     * @param array $params
      *
      * @return AddressCollection
      * @throws InvalidArgumentException
@@ -85,7 +86,8 @@ class GeoCoder
     public function getByLatLng(
         $lat,
         $lng = null,
-        string $placeId = null
+        string $placeId = null,
+        array $params = []
     ): AddressCollection {
         if (is_string($lat) && strpos($lat, ',')) {
             $placeId = null !== $lng ? (string) $lng : null;
@@ -94,7 +96,7 @@ class GeoCoder
             $coordinates = "{$lat},{$lng}";
         }
 
-        $params = ['latlng' => $coordinates, 'place_id' => $placeId];
+        $params = ['latlng' => $coordinates, 'place_id' => $placeId] + $params;
 
         return $this->httpClient->get(
             (new UrlBuilder($params, [], $this->secure))->buildUrl()
