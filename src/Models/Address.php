@@ -2,15 +2,16 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Models;
+namespace McMatters\GoogleGeoCoding\Models;
 
-use McMatters\GoogleGeocoding\Collections\ComponentCollection;
+use McMatters\GoogleGeoCoding\Collections\ComponentCollection;
+
 use const false;
 
 /**
  * Class Address
  *
- * @package McMatters\GoogleGeocoding\Models
+ * @package McMatters\GoogleGeoCoding\Models
  */
 class Address extends ItemModel
 {
@@ -129,7 +130,7 @@ class Address extends ItemModel
     }
 
     /**
-     * @return ComponentCollection
+     * @return \McMatters\GoogleGeoCoding\Collections\ComponentCollection
      */
     public function getComponents(): ComponentCollection
     {
@@ -137,7 +138,7 @@ class Address extends ItemModel
     }
 
     /**
-     * @return Geometry
+     * @return \McMatters\GoogleGeoCoding\Models\Geometry
      */
     public function getGeometry(): Geometry
     {
@@ -147,7 +148,7 @@ class Address extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setFormatted(array $item): self
     {
@@ -159,7 +160,7 @@ class Address extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setPartialMatch(array $item): self
     {
@@ -171,7 +172,7 @@ class Address extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setPlaceId(array $item): self
     {
@@ -183,7 +184,7 @@ class Address extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setTypes(array $item): self
     {
@@ -195,7 +196,7 @@ class Address extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setComponents(array $item): self
     {
@@ -209,7 +210,7 @@ class Address extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setGeometry(array $item): self
     {

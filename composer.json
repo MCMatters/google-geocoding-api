@@ -8,8 +8,8 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "php": ">=7.1",
+        "mcmatters/ticl": "dev-master"
     },
     "require-dev": {
         "codeclimate/php-test-reporter": "^0.4.4",
@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "McMatters\\GoogleGeocoding\\": "src"
+            "McMatters\\GoogleGeoCoding\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "McMatters\\GoogleGeocoding\\Tests\\": "tests"
+            "McMatters\\GoogleGeoCoding\\Tests\\": "tests"
         }
     },
     "config": {

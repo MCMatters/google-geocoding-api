@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Models;
+namespace McMatters\GoogleGeoCoding\Models;
 
 /**
  * Class Component
  *
- * @package McMatters\GoogleGeocoding\Models
+ * @package McMatters\GoogleGeoCoding\Models
  */
 class Component extends ItemModel
 {
@@ -67,7 +67,7 @@ class Component extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setLongName(array $item): self
     {
@@ -79,7 +79,7 @@ class Component extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setShortName(array $item): self
     {
@@ -91,7 +91,7 @@ class Component extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setTypes(array $item): self
     {

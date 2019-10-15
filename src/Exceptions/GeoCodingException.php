@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Exceptions;
+namespace McMatters\GoogleGeoCoding\Exceptions;
 
 /**
  * Interface GeoCodingException
  *
- * @package McMatters\GoogleGeocoding\Exceptions
+ * @package McMatters\GoogleGeoCoding\Exceptions
  */
 interface GeoCodingException
 {

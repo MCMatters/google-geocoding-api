@@ -2,23 +2,25 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Tests;
+namespace McMatters\GoogleGeoCoding\Tests;
 
-use McMatters\GoogleGeocoding\GeoCoder;
-use McMatters\GoogleGeocoding\Models\Address;
+use McMatters\GoogleGeoCoding\GeoCoder;
+use McMatters\GoogleGeoCoding\Models\Address;
 use PHPUnit\Framework\TestCase;
-use const false, null;
+
 use function mb_strpos;
+
+use const false, null;
 
 /**
  * Class GeoCoderTest
  *
- * @package McMatters\GoogleGeocoding\Tests
+ * @package McMatters\GoogleGeoCoding\Tests
  */
 class GeoCoderTest extends TestCase
 {
     /**
-     * @var GeoCoder
+     * @var \McMatters\GoogleGeoCoding\GeoCoder
      */
     protected $geoCoder;
 
@@ -41,8 +43,10 @@ class GeoCoderTest extends TestCase
     /**
      * Test method "getByAddress".
      *
+     * @return void
+     *
      * @throws \InvalidArgumentException
-     * @throws \McMatters\GoogleGeocoding\Exceptions\GeoCodingException
+     * @throws \McMatters\GoogleGeoCoding\Exceptions\GeoCodingException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
      * @throws \Throwable
@@ -58,8 +62,10 @@ class GeoCoderTest extends TestCase
     /**
      * Test method "getByLatLng".
      *
+     * @return void
+     *
      * @throws \InvalidArgumentException
-     * @throws \McMatters\GoogleGeocoding\Exceptions\GeoCodingException
+     * @throws \McMatters\GoogleGeoCoding\Exceptions\GeoCodingException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \Throwable
      */

@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Models;
+namespace McMatters\GoogleGeoCoding\Models;
 
 /**
  * Class Geometry
  *
- * @package McMatters\GoogleGeocoding\Models
+ * @package McMatters\GoogleGeoCoding\Models
  */
 class Geometry extends ItemModel
 {
-    const TYPE_APPROXIMATE = 'APPROXIMATE';
-    const TYPE_GEOMETRIC_CENTER = 'GEOMETRIC_CENTER';
-    const TYPE_RANGE_INTERPOLATED = 'RANGE_INTERPOLATED';
-    const TYPE_ROOFTOP = 'ROOFTOP';
+    public const TYPE_APPROXIMATE = 'APPROXIMATE';
+    public const TYPE_GEOMETRIC_CENTER = 'GEOMETRIC_CENTER';
+    public const TYPE_RANGE_INTERPOLATED = 'RANGE_INTERPOLATED';
+    public const TYPE_ROOFTOP = 'ROOFTOP';
 
     /**
      * @var string
@@ -149,7 +149,7 @@ class Geometry extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setType(array $item): self
     {
@@ -161,7 +161,7 @@ class Geometry extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setLatitude(array $item): self
     {
@@ -173,7 +173,7 @@ class Geometry extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setLongitude(array $item): self
     {
@@ -185,7 +185,7 @@ class Geometry extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setBounds(array $item): self
     {
@@ -197,7 +197,7 @@ class Geometry extends ItemModel
     /**
      * @param array $item
      *
-     * @return $this
+     * @return self
      */
     protected function setViewport(array $item): self
     {

@@ -2,22 +2,24 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Collections;
+namespace McMatters\GoogleGeoCoding\Collections;
 
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
-use McMatters\GoogleGeocoding\Models\ItemModel;
+use McMatters\GoogleGeoCoding\Models\ItemModel;
 use Traversable;
-use const null;
+
 use function array_key_exists, array_unique, count, is_array, is_callable,
     is_object, iterator_to_array;
+
+use const null;
 
 /**
  * Class ItemCollection
  *
- * @package McMatters\GoogleGeocoding\Collections
+ * @package McMatters\GoogleGeoCoding\Collections
  */
 class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
 {
@@ -39,13 +41,13 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * @return string|null
      */
-    public function getModel()
+    public function getModel(): ?string
     {
         return $this->model ?? null;
     }
 
     /**
-     * @return mixed|null
+     * @return mixed
      */
     public function first()
     {
@@ -57,7 +59,7 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * @return ItemCollection
+     * @return self
      */
     public function unique(): self
     {
@@ -68,7 +70,7 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
      * @param string $valueKey
      * @param string|int|null $key
      *
-     * @return ItemCollection
+     * @return self
      */
     public function pluck(string $valueKey, string $key = null): self
     {
@@ -123,9 +125,9 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * @param mixed $key
      *
-     * @return ItemModel|null
+     * @return \McMatters\GoogleGeoCoding\Models\ItemModel|null
      */
-    public function get($key)
+    public function get($key): ?ItemModel
     {
         return $this->offsetGet($key);
     }
@@ -163,9 +165,9 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * @param mixed $offset
      *
-     * @return ItemModel|null
+     * @return \McMatters\GoogleGeoCoding\Models\ItemModel|null
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): ?ItemModel
     {
         return $this->offsetExists($offset) ? $this->items[$offset] : null;
     }
@@ -173,16 +175,20 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
     /**
      * @param mixed $offset
      * @param mixed $value
+     *
+     * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->items[$offset] = $value;
     }
 
     /**
      * @param mixed $offset
+     *
+     * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if ($this->offsetExists($offset)) {
             unset($this->items[$offset]);
@@ -198,7 +204,7 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * @return ArrayIterator
+     * @return \ArrayIterator
      */
     public function getIterator(): ArrayIterator
     {
@@ -210,7 +216,7 @@ class ItemCollection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return void
      */
-    protected function setItems($items)
+    protected function setItems($items): void
     {
         $items = $this->getArrayableItems($items);
 

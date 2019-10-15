@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Exceptions;
+namespace McMatters\GoogleGeoCoding\Exceptions;
 
 use Exception;
 
 /**
  * Class InvalidRequestException
  *
- * @package McMatters\GoogleGeocoding\Exceptions
+ * @package McMatters\GoogleGeoCoding\Exceptions
  */
 class InvalidRequestException extends Exception implements GeoCodingException
 {

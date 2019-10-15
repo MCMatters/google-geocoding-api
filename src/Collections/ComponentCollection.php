@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Collections;
+namespace McMatters\GoogleGeoCoding\Collections;
 
-use McMatters\GoogleGeocoding\Models\Component;
+use McMatters\GoogleGeoCoding\Models\Component;
 
 /**
  * Class ComponentCollection
  *
- * @package McMatters\GoogleGeocoding\Collections
+ * @package McMatters\GoogleGeoCoding\Collections
  */
 class ComponentCollection extends ItemCollection
 {

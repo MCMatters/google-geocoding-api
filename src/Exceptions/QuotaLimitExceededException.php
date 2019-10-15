@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Exceptions;
+namespace McMatters\GoogleGeoCoding\Exceptions;
 
 use Exception;
 
 /**
  * Class QuotaLimitExceededException
  *
- * @package McMatters\GoogleGeocoding\Exceptions
+ * @package McMatters\GoogleGeoCoding\Exceptions
  */
 class QuotaLimitExceededException extends Exception implements GeoCodingException
 {

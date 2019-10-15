@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Models;
+namespace McMatters\GoogleGeoCoding\Models;
 
 /**
  * Class ItemModel
  *
- * @package McMatters\GoogleGeocoding\Models
+ * @package McMatters\GoogleGeoCoding\Models
  */
 abstract class ItemModel
 {
@@ -36,8 +36,10 @@ abstract class ItemModel
 
     /**
      * @param array $item
+     *
+     * @return void
      */
-    protected function setRaw(array $item)
+    protected function setRaw(array $item): void
     {
         $this->raw = $item;
     }

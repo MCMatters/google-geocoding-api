@@ -2,116 +2,79 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Components;
+namespace McMatters\GoogleGeoCoding\Components;
 
-use GuzzleHttp\Client;
 use InvalidArgumentException;
-use McMatters\GoogleGeocoding\Collections\AddressCollection;
-use McMatters\GoogleGeocoding\Exceptions\GeoCodingException;
-use McMatters\GoogleGeocoding\Exceptions\InvalidRequestException;
-use McMatters\GoogleGeocoding\Exceptions\QuotaLimitExceededException;
-use McMatters\GoogleGeocoding\Exceptions\RequestDeniedException;
-use McMatters\GoogleGeocoding\Exceptions\UnknownErrorException;
-use Throwable;
-use const false, null, true;
-use function array_key_exists, gettype, json_decode, strpos;
+use McMatters\GoogleGeoCoding\Collections\AddressCollection;
+use McMatters\GoogleGeoCoding\Exceptions\InvalidRequestException;
+use McMatters\GoogleGeoCoding\Exceptions\QuotaLimitExceededException;
+use McMatters\GoogleGeoCoding\Exceptions\RequestDeniedException;
+use McMatters\GoogleGeoCoding\Exceptions\UnknownErrorException;
+use McMatters\Ticl\Client;
+
+use function gettype;
 
 /**
  * Class HttpClient
  *
- * @package McMatters\GoogleGeocoding\Components
+ * @package McMatters\GoogleGeoCoding\Components
  */
 class HttpClient
 {
     /**
-     * @var Client
+     * @var \McMatters\Ticl\Client
      */
     protected $httpClient;
 
     /**
-     * @var string
+     * @var array
      */
     protected $key;
 
     /**
      * HttpClient constructor.
      *
-     * @param string|array $key
+     * @param array|string $key
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function __construct($key)
     {
-        $this->httpClient = new Client();
+        $this->httpClient = new Client([
+            'base_uri' => 'https://maps.googleapis.com/maps/api/geocode/json',
+        ]);
+
         $this->setKey($key);
     }
 
     /**
-     * @param string $url
+     * @param array $query
      *
-     * @return AddressCollection|null
-     * @throws GeoCodingException
-     * @throws Throwable
-     */
-    public function get(string $url)
-    {
-        $url = $this->appendKeyToUrl($url);
-
-        try {
-            $response = $this->httpClient->get($url)->getBody()->getContents();
-        } catch (Throwable $e) {
-            $response = $e->getResponse();
-
-            if (null === $response) {
-                throw $e;
-            }
-
-            $response = $response->getBody()->getContents();
-        }
-
-        return $this->parseResponse($response);
-    }
-
-    /**
-     * @param string|null $response
+     * @return \McMatters\GoogleGeoCoding\Collections\AddressCollection|null
      *
-     * @return AddressCollection|null
-     * @throws GeoCodingException
+     * @throws \McMatters\GoogleGeoCoding\Exceptions\GeoCodingException
+     * @throws \Throwable
      */
-    protected function parseResponse(string $response = null)
+    public function get(array $query = []): ?AddressCollection
     {
-        if (!$response) {
+        $data = $this->httpClient
+            ->withQuery($this->key + $query)
+            ->get('/')
+            ->json();
+
+        if (!$data) {
             return new AddressCollection([]);
         }
 
-        $content = json_decode($response, true);
+        $this->checkResponseStatus($data['status'], $data['error_message'] ?? '');
 
-        $this->checkResponseStatus(
-            $content['status'],
-            $this->getResponseErrors($content)
-        );
-
-        return $this->getResponseResults($content);
+        return $this->getResponseResults($data);
     }
 
     /**
      * @param array $content
      *
-     * @return string
-     */
-    protected function getResponseErrors(array $content): string
-    {
-        if (array_key_exists('error_message', $content)) {
-            return $content['error_message'];
-        }
-
-        return '';
-    }
-
-    /**
-     * @param array $content
-     *
-     * @return AddressCollection
+     * @return \McMatters\GoogleGeoCoding\Collections\AddressCollection
      */
     protected function getResponseResults(array $content): AddressCollection
     {
@@ -127,9 +90,10 @@ class HttpClient
      * @param string $error
      *
      * @return void
-     * @throws GeoCodingException
+     *
+     * @throws \McMatters\GoogleGeoCoding\Exceptions\GeoCodingException
      */
-    protected function checkResponseStatus(string $status, string $error = '')
+    protected function checkResponseStatus(string $status, string $error = ''): void
     {
         switch ($status) {
             case 'OVER_QUERY_LIMIT':
@@ -147,12 +111,13 @@ class HttpClient
     }
 
     /**
-     * @param mixed $key
+     * @param array|string $key
      *
      * @return void
-     * @throws InvalidArgumentException
+     *
+     * @throws \InvalidArgumentException
      */
-    protected function setKey($key)
+    protected function setKey($key): void
     {
         switch (gettype($key)) {
             case 'array':
@@ -162,25 +127,15 @@ class HttpClient
                     );
                 }
 
-                $this->key = "client={$key['client']}&signature={$key['signature']}";
+                $this->key = $key;
                 break;
 
             case 'string':
-                $this->key = "key={$key}";
+                $this->key = ['key' => $key];
                 break;
 
             default:
                 throw new InvalidArgumentException('$key must be string or array');
         }
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
-    protected function appendKeyToUrl(string $url): string
-    {
-        return $url.(strpos($url, '?') !== false ? '&' : '?').$this->key;
     }
 }

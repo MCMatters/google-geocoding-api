@@ -2,26 +2,25 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding;
+namespace McMatters\GoogleGeoCoding;
 
 use InvalidArgumentException;
-use McMatters\GoogleGeocoding\Collections\AddressCollection;
-use McMatters\GoogleGeocoding\Components\HttpClient;
-use McMatters\GoogleGeocoding\Components\UrlBuilder;
-use McMatters\GoogleGeocoding\Exceptions\GeoCodingException;
-use Throwable;
-use const null, true;
-use function array_merge, is_string, strpos;
+use McMatters\GoogleGeoCoding\Collections\AddressCollection;
+use McMatters\GoogleGeoCoding\Components\HttpClient;
+
+use function is_string, strpos;
+
+use const null;
 
 /**
  * Class GeoCoder
  *
- * @package McMatters\GoogleGeocoding
+ * @package McMatters\GoogleGeoCoding
  */
 class GeoCoder
 {
     /**
-     * @var HttpClient
+     * @var \McMatters\GoogleGeoCoding\Components\HttpClient
      */
     protected $httpClient;
 
@@ -34,60 +33,54 @@ class GeoCoder
      * GeoCoder constructor.
      *
      * @param string|array $key
-     * @param bool $secure
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    public function __construct($key, bool $secure = true)
+    public function __construct($key)
     {
-        $this->secure = $secure;
         $this->httpClient = new HttpClient($key);
     }
 
     /**
      * @param string|null $address
-     * @param array|string $components
-     * @param array $params
+     * @param array $query
      *
-     * @return AddressCollection
-     * @throws InvalidArgumentException
-     * @throws GeoCodingException
-     * @throws Throwable
+     * @return \McMatters\GoogleGeoCoding\Collections\AddressCollection
+     *
+     * @throws \InvalidArgumentException
+     * @throws \McMatters\GoogleGeoCoding\Exceptions\GeoCodingException
+     * @throws \Throwable
      */
     public function getByAddress(
         string $address = null,
-        $components = [],
-        array $params = []
+        array $query = []
     ): AddressCollection {
-        if (null === $address && empty($components)) {
+        if (null === $address && empty($query)) {
             throw new InvalidArgumentException(
-                '$address or $components is required.'
+                '"address" or "components" is required.'
             );
         }
 
-        $params = array_merge($params, ['address' => $address]);
-
-        return $this->httpClient->get(
-            (new UrlBuilder($params, $components, $this->secure))->buildUrl()
-        );
+        return $this->httpClient->get($query + ['address' => $address]);
     }
 
     /**
      * @param float|string $lat
      * @param float|string|null $lng
      * @param string|null $placeId
-     * @param array $params
+     * @param array $query
      *
      * @return AddressCollection
-     * @throws InvalidArgumentException
-     * @throws GeoCodingException
-     * @throws Throwable
+     *
+     * @throws \InvalidArgumentException
+     * @throws \McMatters\GoogleGeoCoding\Exceptions\GeoCodingException
+     * @throws \Throwable
      */
     public function getByLatLng(
         $lat,
         $lng = null,
         string $placeId = null,
-        array $params = []
+        array $query = []
     ): AddressCollection {
         if (is_string($lat) && strpos($lat, ',')) {
             $placeId = null !== $lng ? (string) $lng : null;
@@ -96,10 +89,8 @@ class GeoCoder
             $coordinates = "{$lat},{$lng}";
         }
 
-        $params = ['latlng' => $coordinates, 'place_id' => $placeId] + $params;
-
         return $this->httpClient->get(
-            (new UrlBuilder($params, [], $this->secure))->buildUrl()
+            ['latlng' => $coordinates, 'place_id' => $placeId] + $query
         );
     }
 }

@@ -2,17 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace McMatters\GoogleGeocoding\Collections;
+namespace McMatters\GoogleGeoCoding\Collections;
 
-use McMatters\GoogleGeocoding\Models\Address;
-use McMatters\GoogleGeocoding\Models\Geometry;
-use const false, true;
+use McMatters\GoogleGeoCoding\Models\Address;
+use McMatters\GoogleGeoCoding\Models\Geometry;
+
 use function array_merge, reset;
+
+use const false, true;
 
 /**
  * Class AddressCollection
  *
- * @package McMatters\GoogleGeocoding\Collections
+ * @package McMatters\GoogleGeoCoding\Collections
  */
 class AddressCollection extends ItemCollection
 {
@@ -30,7 +32,7 @@ class AddressCollection extends ItemCollection
     }
 
     /**
-     * @return AddressCollection
+     * @return self
      */
     public function getFullMatched(): self
     {
@@ -38,7 +40,7 @@ class AddressCollection extends ItemCollection
     }
 
     /**
-     * @return AddressCollection
+     * @return self
      */
     public function getPartialMatched(): self
     {
@@ -46,7 +48,7 @@ class AddressCollection extends ItemCollection
     }
 
     /**
-     * @return ComponentCollection
+     * @return \McMatters\GoogleGeoCoding\Collections\ComponentCollection
      */
     public function getComponents(): ComponentCollection
     {
@@ -60,9 +62,9 @@ class AddressCollection extends ItemCollection
     }
 
     /**
-     * @return Address|null
+     * @return \McMatters\GoogleGeoCoding\Models\Address|null
      */
-    public function getExactMatch()
+    public function getExactMatch(): ?Address
     {
         $addresses = [];
 
@@ -70,6 +72,7 @@ class AddressCollection extends ItemCollection
             return $this->first();
         }
 
+        /** @var \McMatters\GoogleGeoCoding\Models\Address $item */
         foreach ($this->items as $item) {
             if ($item->isPartialMatch() === false) {
                 return $item;
@@ -90,7 +93,7 @@ class AddressCollection extends ItemCollection
     /**
      * @param bool $flag
      *
-     * @return AddressCollection
+     * @return self
      */
     protected function getMatched(bool $flag = false): self
     {
